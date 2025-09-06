@@ -1,3 +1,4 @@
+import random
 class Tensor(list):
     def __init__(self,*args,**kwargs):
         super(Tensor, self).__init__(*args,**kwargs)
@@ -68,9 +69,29 @@ class Tensor(list):
             if self[0].__class__.__name__ == 'Tensor':
                 shape = shape+self[0].shape()
         return shape
+def matmul(A,B):
+    result = zeros([A.shape()[0],B.shape()[1]])
+    for i in range(A.shape()[0]):
+        for j in range(B.shape()[1]):
+            for k in range(A.shape()[1]):
+                result[i][j] += A[i][k] * B[k][j]
+    return result
 def ones(shape):
     if isinstance(shape, int):
         return Tensor([1 for i in range(shape)])
     if len(shape) == 0:
         return 1
     return Tensor([ones(shape[1:]) for i in range(shape[0])])
+def zeros(shape):
+    if isinstance(shape, int):
+        return Tensor([0 for i in range(shape)])
+    if len(shape) == 0:
+        return 0
+    return Tensor([zeros(shape[1:]) for i in range(shape[0])])
+def rand_tensor(shape,seed=None):
+    random.seed(seed)
+    if isinstance(shape, int):
+        return Tensor([random.random() for i in range(shape)])
+    if len(shape) == 0:
+        return random.random()
+    return Tensor([rand_tensor(shape[1:]) for i in range(shape[0])])
