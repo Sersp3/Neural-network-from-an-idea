@@ -69,6 +69,12 @@ class Tensor(list):
             if self[0].__class__.__name__ == 'Tensor':
                 shape = shape+self[0].shape()
         return shape
+    def transpose(self):
+        result = zeros([self.shape()[1],self.shape()[0]])
+        for i in range(len(self)):
+            for j in range(len(self[0])):
+                result[j][i] = self[i][j]
+        return result
 def matmul(A,B):
     result = zeros([A.shape()[0],B.shape()[1]])
     for i in range(A.shape()[0]):
