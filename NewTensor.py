@@ -6,6 +6,14 @@ class Tensor(list):
             if isinstance(self[0], list):
                 for i in range(len(self)):
                     self[i] = Tensor(self[i])
+    def float(self):
+        if isinstance(self, Tensor):
+            for i in range(len(self)):
+                if isinstance(self[i], Tensor):
+                    self[i] = self[i].float()
+                else:
+                    self[i] = float(self[i])
+        return self
     def __add__(self, other):
         if self.__class__.__name__ == other.__class__.__name__:
             return Tensor([self[i] + other[i] for i in range(len(self))])
