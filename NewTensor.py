@@ -1,4 +1,5 @@
 import random
+import math
 class Tensor(list):
     def __init__(self,*args,**kwargs):
         super(Tensor, self).__init__(*args,**kwargs)
